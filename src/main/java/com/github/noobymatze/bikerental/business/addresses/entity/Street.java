@@ -51,4 +51,18 @@ public class Street implements Serializable {
         );
     }
     
+    /**
+     * Create a new street in the given city specified by the zipcode.
+     * 
+     * @param name The name of the street.
+     * @param zipcode The zipcode of the city, where the street can be found..
+     * @return Fresh street with the name and zipcode.
+     */
+    public static Street withNameAndZip(String name, Zipcode zipcode) {
+        Street street = new Street();
+        street.name = name;
+        street.zipcode = zipcode;
+        return street;
+    }
+
 }

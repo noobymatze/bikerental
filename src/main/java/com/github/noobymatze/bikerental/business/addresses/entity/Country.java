@@ -37,4 +37,16 @@ public class Country implements Serializable {
         return getName();
     }
     
+    /**
+     * Create a new country with the given name.
+     * 
+     * @param name The name of the country.
+     * @return Fresh country instance.
+     */
+    public static Country withName(String name) {
+        Country c = new Country();
+        c.name = name;
+        return c;
+    }
+
 }

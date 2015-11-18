@@ -63,4 +63,19 @@ public class Address implements Serializable {
         return String.format("%s, %s", address, street);
     }
     
+    /**
+     * Creates a new address with the given house number in
+     * the specified street.
+     * 
+     * @param house The number of the house.
+     * @param street The street in which this house can be found.
+     * @return Fresh address.
+     */
+    public static Address withHouseAndZip(Integer house , Street street) {
+        Address address = new Address();
+        address.houseNumber = house;
+        address.street = street;
+        return address;
+    }
+
 }

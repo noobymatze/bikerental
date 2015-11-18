@@ -51,4 +51,18 @@ public class City implements Serializable {
         );
     }
     
+    /**
+     * Create a new city in a given country.
+     * 
+     * @param name The name of the city.
+     * @param country The country in which the city is.
+     * @return Fresh city within a country.
+     */
+    public static City withNameIn(String name, Country country) {
+        City city = new City();
+        city.name = name;
+        city.country = country;
+        return city; 
+    }
+
 }

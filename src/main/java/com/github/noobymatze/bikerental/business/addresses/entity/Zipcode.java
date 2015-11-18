@@ -53,4 +53,18 @@ public class Zipcode implements Serializable {
         );
     }
 
+    /**
+     * Create a new zipcode of the given city.
+     * 
+     * @param value The code.
+     * @param city The city to which this zipcode belongs.
+     * @return Fresh zipcode for the given city.
+     */
+    public static Zipcode withCity(String value, City city) {
+        Zipcode zipcode = new Zipcode();
+        zipcode.value = value;
+        zipcode.city = city;
+        return zipcode;
+    }
+
 }
