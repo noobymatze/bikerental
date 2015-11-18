@@ -16,3 +16,5 @@ will run the integration tests.
 ```bash
 $ mvn failsafe:integration-test
 ```
+
+[1]: https://maven.apache.org
