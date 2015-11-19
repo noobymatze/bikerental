@@ -1,22 +1,21 @@
-package com.github.noobymatze.bikerental.business.customers.entity;
+package com.github.noobymatze.bikerental.business.administration.entity;
 
 import com.github.noobymatze.bikerental.business.Person;
-import com.github.noobymatze.bikerental.business.administration.entity.User;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
- * Represents a customer of the bike rental.
+ * Represents an employee of the rental company.
  *
  * @author Matthias Metzger
  */
 @Entity
-@Table(name = "customer")
-public class Customer extends Person {
+@Table(name = "employee")
+public class Employee extends Person {
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
     private User user;
 
     public User getUser() {
