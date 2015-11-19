@@ -16,8 +16,28 @@ sudo apt-get install -y oracle-java8-set-default
 
 # Setup database
 echo "DROP DATABASE IF EXISTS test" | mysql -uroot -psql
-echo "CREATE USER 'wildfly'@'localhost' IDENTIFIED BY 'wildfly'" | mysql -uroot -psql
+echo "CREATE USER 'wildfly'@'%' IDENTIFIED BY 'wildfly'" | mysql -uroot -psql
 echo "CREATE DATABASE bikerental" | mysql -uroot -psql
-echo "GRANT ALL ON bikerental.* TO 'wildfly'@'localhost'" | mysql -uroot -psql
+echo "CREATE DATABASE bikerental_it" | mysql -uroot -psql
+echo "GRANT ALL ON bikerental.* TO 'wildfly'@'%'" | mysql -uroot -psql
+echo "GRANT ALL ON bikerental_it.* TO 'wildfly'@'%'" | mysql -uroot -psql
 echo "FLUSH PRIVILEGES" | mysql -uroot -psql
 
+sudo sed -i "s/bind-address.*=.*127.0.0.1/bind-address = 0.0.0.0/g" /etc/mysql/my.cnf
+sudo service mysql restart
+
+# Now for a maven installation
+$MAVEN_VERSION=3.3.9
+$M2_HOME=/opt/apache-maven-${MAVEN_VERSION}
+$MAVEN_TAR_FILE=apache-maven-${MAVEN_VERSION}-bin.tar.gz
+$MAVEN_DOWNLOAD_URL=http://ftp-stud.hs-esslingen.de/pub/Mirrors/ftp.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/$MAVEN_TAR_FILE
+
+wget $MAVEN_DOWNLOAD_URL
+
+tar -xvf $MAVEN_TAR_FILE -C /opt/
+rm $MAVEN_TAR_FILE
+
+echo "export M2_HOME=${M2_HOME}" >> ~/.profile
+echo 'export PATH=$M2_HOME/bin:$PATH' >> ~/.profile
+
+source ~/.profile
