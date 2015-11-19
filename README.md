@@ -1,4 +1,4 @@
-# Bikerental
+# Bike rental
 
 This application is just a simple implementation of a bike rental service and
 is mainly used for exploring JPA at the FH Wedel.
