@@ -7,6 +7,7 @@ import java.util.List;
 import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.CascadeType.REFRESH;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,6 +21,7 @@ import javax.persistence.Table;
  *
  * @author Matthias Metzger
  */
+@Entity
 @Table(name = "article")
 public class Article implements Serializable {
 
