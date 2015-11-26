@@ -5,6 +5,7 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.Optional;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -33,9 +34,11 @@ public class TimePeriod implements Serializable {
     private String name;
 
     @NotNull
+    @Column(name = "from_time")
     private ZonedDateTime from;
 
     @NotNull
+    @Column(name = "to_time")
     private ZonedDateTime to;
 
     public ZonedDateTime getFrom() {
