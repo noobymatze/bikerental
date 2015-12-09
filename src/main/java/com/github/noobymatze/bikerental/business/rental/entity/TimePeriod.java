@@ -1,4 +1,4 @@
-package com.github.noobymatze.bikerental.business.rental;
+package com.github.noobymatze.bikerental.business.rental.entity;
 
 import java.io.Serializable;
 import java.time.ZonedDateTime;

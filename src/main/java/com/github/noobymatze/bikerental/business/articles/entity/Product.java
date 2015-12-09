@@ -1,6 +1,6 @@
 package com.github.noobymatze.bikerental.business.articles.entity;
 
-import com.github.noobymatze.bikerental.business.rental.Reservation;
+import com.github.noobymatze.bikerental.business.rental.entity.Reservation;
 import java.io.Serializable;
 import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.CascadeType.PERSIST;
