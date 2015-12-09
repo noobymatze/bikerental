@@ -1,5 +1,6 @@
-package com.github.noobymatze.bikerental.business.rental.entity;
+package com.github.noobymatze.bikerental.business.rental;
 
+import com.github.noobymatze.bikerental.business.articles.entity.Product;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public class Reservation implements Serializable {
     private TimePeriod timePeriod;
 
     @OneToMany(mappedBy = "reservation")
-    private final List<Article> articles = new ArrayList<>();
+    private final List<Product> products = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -42,8 +43,8 @@ public class Reservation implements Serializable {
         return timePeriod;
     }
 
-    public List<Article> getArticles() {
-        return articles;
+    public List<Product> getProducts() {
+        return products;
     }
 
 }

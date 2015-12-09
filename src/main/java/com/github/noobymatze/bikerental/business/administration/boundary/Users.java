@@ -1,7 +1,6 @@
 package com.github.noobymatze.bikerental.business.administration.boundary;
 
 import com.github.noobymatze.bikerental.business.administration.entity.User;
-import com.github.noobymatze.bikerental.business.administration.entity.User_;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.Stateless;
@@ -35,8 +34,8 @@ public class Users {
         Root<User> user = query.from(User.class);
 
         query.where(
-            cb.equal(user.get(User_.email), email),
-            cb.equal(user.get(User_.password), password)
+            cb.equal(user.get("email"), email),
+            cb.equal(user.get("password"), password)
         );
 
         List<User> users = em.createQuery(query).getResultList();
