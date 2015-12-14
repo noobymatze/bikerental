@@ -23,8 +23,7 @@ import javax.validation.constraints.NotNull;
 public class TimePeriod implements Serializable {
 
     private static final DateTimeFormatter FORMATTER = new DateTimeFormatterBuilder().
-            appendPattern("dd.MM.yyyy HH:mm").
-            appendLiteral(" Uhr").
+            appendPattern("MM/dd/yyyy HH:mm a").
             toFormatter();
 
     @Id
