@@ -15,9 +15,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -43,10 +43,12 @@ public class Reservation implements Serializable {
     @JoinColumn(name = "time_period_id")
     private TimePeriod timePeriod;
 
-    @OneToMany(mappedBy = "reservation")
+    @ManyToMany(mappedBy = "reservation")
+    @JoinTable(name = "reservation_has_product")
     private final List<Product> products = new ArrayList<>();
 
     @ManyToMany
+    @JoinTable(name = "reservation_has_discount")
     private final List<Discount> discounts = new ArrayList<>();
 
     @ManyToOne(optional = false)
