@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.Getter;
+import lombok.ToString;
 
 /**
  * Represents the price during a specified period of time.
@@ -17,49 +19,31 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "timed_price")
+@Getter
 public class Price implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ToString(of = "symbol")
     public enum Currency {
         EUR("€"),
         USD("$"),
         GBP(" ");
 
-        private final String symbol;
+        private final @Getter String symbol;
 
         private Currency(String symbol) {
             this.symbol = symbol;
         }
 
-        public String getSymbol() {
-            return symbol;
-        }
-
-        @Override
-        public String toString() {
-            return getSymbol();
-        }
     }
 
     @Enumerated(EnumType.STRING)
     private Currency currency;
 
     private BigDecimal amount;
-
-    public Long getId() {
-        return id;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public Currency getCurrency() {
-        return currency;
-    }
 
     @Override
     public String toString() {

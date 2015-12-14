@@ -2,13 +2,14 @@ package com.github.noobymatze.bikerental.business.administration.entity;
 
 import com.github.noobymatze.bikerental.business.addresses.entity.Address;
 import java.io.Serializable;
-import java.util.Objects;
 import javax.persistence.Column;
+import lombok.EqualsAndHashCode;
 
 /**
  *
  * @author Matthias Metzger
  */
+@EqualsAndHashCode
 public class CustomerAddressId implements Serializable {
 
     @Column(name = "address_id")
@@ -16,35 +17,6 @@ public class CustomerAddressId implements Serializable {
 
     @Column(name = "customer_id")
     private Long customerId;
-
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 41 * hash + Objects.hashCode(this.addressId);
-        hash = 41 * hash + Objects.hashCode(this.customerId);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final CustomerAddressId other = (CustomerAddressId) obj;
-        if (!Objects.equals(this.addressId, other.addressId)) {
-            return false;
-        }
-        if (!Objects.equals(this.customerId, other.customerId)) {
-            return false;
-        }
-        return true;
-    }
 
     /**
      * Creates a new {@link CustomerAddressId} from the given Customer and
@@ -56,7 +28,7 @@ public class CustomerAddressId implements Serializable {
      * be used.
      * @return A new CustomerAddressId
      */
-    static CustomerAddressId fromCustomerAndAddress(Customer customer, Address address) {
+    static CustomerAddressId of(Customer customer, Address address) {
         CustomerAddressId id = new CustomerAddressId();
         id.addressId = address.getId();
         id.customerId = customer.getId();

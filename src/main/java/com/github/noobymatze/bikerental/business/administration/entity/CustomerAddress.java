@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
+import lombok.Getter;
 
 /**
  * Represents an address of a customer. It is purely used
@@ -27,19 +28,13 @@ public class CustomerAddress implements Serializable {
 
     @ManyToOne(optional = false, cascade = {MERGE, PERSIST, REFRESH})
     @MapsId("address_id")
+    @Getter
     private Address address;
 
     @ManyToOne(optional = false, cascade = {MERGE, PERSIST, REFRESH})
     @MapsId("customer_id")
+    @Getter
     private Customer customer;
-
-    public Address getAddress() {
-        return address;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
 
     /**
      * Associate the given customer with the given address.
@@ -52,7 +47,7 @@ public class CustomerAddress implements Serializable {
         CustomerAddress caddr = new CustomerAddress();
         caddr.address = address;
         caddr.customer = customer;
-        caddr.id = CustomerAddressId.fromCustomerAndAddress(customer, address);
+        caddr.id = CustomerAddressId.of(customer, address);
         return caddr;
     }
     

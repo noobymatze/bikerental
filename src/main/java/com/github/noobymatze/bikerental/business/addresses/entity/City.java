@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import lombok.Getter;
 
 /**
  * Represents a city in a country.
@@ -19,6 +20,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "city")
+@Getter
 public class City implements Serializable {
 
     @Id
@@ -30,18 +32,6 @@ public class City implements Serializable {
 
     @ManyToOne(optional = false, cascade = {PERSIST, REFRESH, MERGE})
     private Country country;
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Country getCountry() {
-        return country;
-    }
 
     @Override
     public String toString() {

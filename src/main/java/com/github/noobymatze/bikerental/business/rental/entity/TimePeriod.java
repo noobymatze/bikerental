@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import lombok.Getter;
 
 /**
  * Represents a time period.
@@ -20,6 +21,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "time_period")
+@Getter
 public class TimePeriod implements Serializable {
 
     private static final DateTimeFormatter FORMATTER = new DateTimeFormatterBuilder().
@@ -39,26 +41,6 @@ public class TimePeriod implements Serializable {
     @NotNull
     @Column(name = "to_time")
     private ZonedDateTime to;
-
-    public ZonedDateTime getFrom() {
-        return from;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public ZonedDateTime getTo() {
-        return to;
-    }
-
-    public Optional<String> getNameO() {
-        return Optional.ofNullable(name);
-    }
-
-    public String getName() {
-        return name;
-    }
 
     @Override
     public String toString() {

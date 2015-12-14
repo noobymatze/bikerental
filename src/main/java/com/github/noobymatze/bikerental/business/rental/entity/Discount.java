@@ -3,7 +3,6 @@ package com.github.noobymatze.bikerental.business.rental.entity;
 import com.github.noobymatze.bikerental.business.products.entity.Product;
 import java.io.Serializable;
 import java.text.DecimalFormat;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,12 +13,12 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
+import lombok.Getter;
 
 /**
  * Represents a discount for the specified product during the given time
  * period. 
  * 
- * <h4>Invariants</h4>
  * <ul>
  * <li>Only one discount per specified time period per product is allowed.</li>
  * <li>The percentage should not be greater than 50%.</li>
@@ -34,6 +33,7 @@ import javax.validation.constraints.DecimalMin;
         @UniqueConstraint(columnNames = {"time_period_id", "product_id"})
     }
 )
+@Getter
 public class Discount implements Serializable {
 
     @Id
@@ -50,38 +50,6 @@ public class Discount implements Serializable {
 
     @ManyToOne(optional = false)
     private Product product;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public double getPercentage() {
-        return percentage;
-    }
-
-    public void setPercentage(double percentage) {
-        this.percentage = percentage;
-    }
-
-    public TimePeriod getTimePeriod() {
-        return timePeriod;
-    }
-
-    public void setTimePeriod(TimePeriod timePeriod) {
-        this.timePeriod = timePeriod;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
 
     @Override
     public String toString() {

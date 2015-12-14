@@ -19,6 +19,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import lombok.Getter;
 
 /**
  * Represents the reservation for a product for a specific period of
@@ -28,6 +29,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "reservation")
+@Getter
 public class Reservation implements Serializable {
 
     @Id
@@ -53,34 +55,6 @@ public class Reservation implements Serializable {
 
     @ManyToOne(optional = false)
     private Customer customer;
-
-    public Long getId() {
-        return id;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public ZonedDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public List<Discount> getDiscounts() {
-        return discounts;
-    }
-
-    public TimePeriod getTimePeriod() {
-        return timePeriod;
-    }
-
-    public List<Product> getProducts() {
-        return products;
-    }
-
-    public boolean isCancelled() {
-        return cancelled;
-    }
 
     @Override
     public String toString() {

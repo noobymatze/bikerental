@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+import lombok.Getter;
 
 /**
  * Represents a real world person with a name and some contact information.
@@ -12,6 +13,7 @@ import javax.persistence.MappedSuperclass;
  * @author Matthias Metzger
  */
 @MappedSuperclass
+@Getter
 public abstract class Person implements Serializable {
 
     @Id
@@ -21,20 +23,11 @@ public abstract class Person implements Serializable {
     private String firstName;
     private String lastName;
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
     public String getFullName() {
-        return String.format("%s %s", firstName, lastName);
+        return String.format(
+            "%s %s", 
+            getFirstName(), getLastName()
+        );
     }
 
     @Override

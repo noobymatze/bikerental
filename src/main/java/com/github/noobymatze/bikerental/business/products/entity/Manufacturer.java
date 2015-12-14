@@ -6,6 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import lombok.Getter;
 
 /**
  * Represents a manufacturer. 
@@ -14,6 +15,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "manufacturer")
+@Getter
 public class Manufacturer implements Serializable {
 
     @Id
@@ -21,14 +23,6 @@ public class Manufacturer implements Serializable {
     private Long id;
 
     private String name;
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
 
     @Override
     public String toString() {

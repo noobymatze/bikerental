@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import lombok.Getter;
 
 /**
  * Represents a country of the earth.
@@ -16,6 +17,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "country")
+@Getter
 public class Country implements Serializable {
 
     @Id
@@ -25,14 +27,6 @@ public class Country implements Serializable {
     @NotNull
     @Column(unique = true)
     private String name;
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
 
     @Override
     public String toString() {

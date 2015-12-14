@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import lombok.Getter;
 
 /**
  * Represents a zipcode of a city.
@@ -20,6 +21,7 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "zipcode")
+@Getter
 public class Zipcode implements Serializable {
 
     @Id
@@ -32,18 +34,6 @@ public class Zipcode implements Serializable {
 
     @ManyToOne(optional = false, cascade = {PERSIST, REFRESH, MERGE})
     private City city;
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public City getCity() {
-        return city;
-    }
 
     @Override
     public String toString() {

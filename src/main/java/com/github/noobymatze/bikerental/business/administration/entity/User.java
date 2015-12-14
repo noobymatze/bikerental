@@ -6,6 +6,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import lombok.Getter;
 
 /**
  * Represents an administrator of the rental company. 
@@ -16,6 +17,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "users")
 @Inheritance(strategy = InheritanceType.JOINED)
+@Getter
 public class User extends Person {
 
     @NotNull
@@ -24,14 +26,6 @@ public class User extends Person {
 
     @NotNull
     private String password;
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
 
     @Override
     public String toString() {

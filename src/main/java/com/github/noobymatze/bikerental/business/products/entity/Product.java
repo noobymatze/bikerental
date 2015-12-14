@@ -19,6 +19,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import lombok.Getter;
 
 /**
  * Represents an article in the bike rental.
@@ -28,6 +29,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "product")
 @Inheritance(strategy = InheritanceType.JOINED)
+@Getter
 public class Product implements Serializable {
 
     @Id
@@ -45,25 +47,5 @@ public class Product implements Serializable {
 
     @ManyToMany
     private final List<Reservation> reservations = new ArrayList<>();
-
-    public Long getId() {
-        return id;
-    }
-
-    public ZonedDateTime getPurchaseDate() {
-        return purchaseDate;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public Price getPricePerMinute() {
-        return pricePerMinute;
-    }
-
-    public List<Reservation> getReservations() {
-        return reservations;
-    }
 
 }

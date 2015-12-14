@@ -1,7 +1,7 @@
 package com.github.noobymatze.bikerental.business.addresses.entity;
 
 import java.io.Serializable;
-import java.util.Optional;
+import static java.util.Objects.isNull;
 import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.CascadeType.REFRESH;
@@ -13,6 +13,10 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  * Represents an address in the real world.
@@ -21,6 +25,10 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "address")
+@Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Address implements Serializable {
 
     @Id
@@ -36,33 +44,14 @@ public class Address implements Serializable {
     @ManyToOne(optional = false, cascade = {MERGE, PERSIST, REFRESH})
     private Street street;
 
-    public Long getId() {
-        return id;
-    }
-
-    public Street getStreet() {
-        return street;
-    }
-
-    public Integer getHouseNumber() {
-        return houseNumber;
-    }
-
-    public String getAddition() {
-        return addition;
-    }
-
-    public Optional<String> getAdditionO() {
-        return Optional.ofNullable(addition);
-    }
-
     @Override
     public String toString() {
-        String address = getAdditionO().
-            map(val -> houseNumber + " " + val).
-            orElse(houseNumber.toString());
+        String text = houseNumber.toString();
+        if (isNull(addition)) {
+            text = houseNumber + " " + addition;
+        }
 
-        return String.format("%s, %s", address, street);
+        return String.format("%s, %s", text, street);
     }
     
     /**
@@ -73,11 +62,11 @@ public class Address implements Serializable {
      * @param street The street in which this house can be found.
      * @return Fresh address.
      */
-    public static Address withHouseAndZip(Integer house , Street street) {
-        Address address = new Address();
-        address.houseNumber = house;
-        address.street = street;
-        return address;
+    public static Address withHouseAndZip(Integer house, Street street) {
+        return new AddressBuilder().
+            houseNumber(house).
+            street(street).
+            build();
     }
 
 }
