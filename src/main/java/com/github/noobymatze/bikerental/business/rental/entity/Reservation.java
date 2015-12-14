@@ -1,5 +1,6 @@
 package com.github.noobymatze.bikerental.business.rental.entity;
 
+import com.github.noobymatze.bikerental.business.administration.entity.Customer;
 import com.github.noobymatze.bikerental.business.products.entity.Product;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
@@ -48,8 +49,15 @@ public class Reservation implements Serializable {
     @ManyToMany
     private final List<Discount> discounts = new ArrayList<>();
 
+    @ManyToOne(optional = false)
+    private Customer customer;
+
     public Long getId() {
         return id;
+    }
+
+    public Customer getCustomer() {
+        return customer;
     }
 
     public ZonedDateTime getCreatedAt() {
@@ -75,8 +83,8 @@ public class Reservation implements Serializable {
     @Override
     public String toString() {
         return String.format(
-            "%s are reserved %s with discounts %s",
-            products, timePeriod, discounts
+            "%s reserved %s %s with discounts %s",
+            customer, products, timePeriod, discounts
         );
     }
 
