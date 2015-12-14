@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Table(name = "bike")
 public class Bike extends Product {
 
-    @Column(unique = true)
+    @Column(name = "frame_number", unique = true)
     private String frameNumber;
 
     private String model;

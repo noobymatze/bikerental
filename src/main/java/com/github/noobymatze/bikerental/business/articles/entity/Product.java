@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -32,6 +33,7 @@ public class Product implements Serializable {
     private String description;
 
     @OneToOne(orphanRemoval = true, optional = false, cascade = {MERGE, PERSIST, REFRESH})
+    @JoinColumn(name = "price_per_minute")
     private Price pricePerMinute;
 
     @ManyToOne

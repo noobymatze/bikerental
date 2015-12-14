@@ -2,6 +2,7 @@ package com.github.noobymatze.bikerental.business.customers.entity;
 
 import com.github.noobymatze.bikerental.business.addresses.entity.Address;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Column;
 
 /**
@@ -15,6 +16,35 @@ public class CustomerAddressId implements Serializable {
 
     @Column(name = "customer_id")
     private Long customerId;
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 41 * hash + Objects.hashCode(this.addressId);
+        hash = 41 * hash + Objects.hashCode(this.customerId);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final CustomerAddressId other = (CustomerAddressId) obj;
+        if (!Objects.equals(this.addressId, other.addressId)) {
+            return false;
+        }
+        if (!Objects.equals(this.customerId, other.customerId)) {
+            return false;
+        }
+        return true;
+    }
 
     /**
      * Creates a new {@link CustomerAddressId} from the given Customer and

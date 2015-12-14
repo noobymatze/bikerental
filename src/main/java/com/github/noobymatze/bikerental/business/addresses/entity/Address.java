@@ -5,6 +5,7 @@ import java.util.Optional;
 import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.CascadeType.REFRESH;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,6 +28,7 @@ public class Address implements Serializable {
     private Long id;
 
     @NotNull
+    @Column(name = "house_number")
     private Integer houseNumber;
 
     private String addition;
