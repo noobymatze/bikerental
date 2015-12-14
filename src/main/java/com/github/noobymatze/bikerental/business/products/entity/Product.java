@@ -1,4 +1,4 @@
-package com.github.noobymatze.bikerental.business.articles.entity;
+package com.github.noobymatze.bikerental.business.products.entity;
 
 import com.github.noobymatze.bikerental.business.rental.entity.Reservation;
 import java.io.Serializable;

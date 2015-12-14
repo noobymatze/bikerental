@@ -1,4 +1,4 @@
-package com.github.noobymatze.bikerental.business.articles.entity;
+package com.github.noobymatze.bikerental.business.products.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

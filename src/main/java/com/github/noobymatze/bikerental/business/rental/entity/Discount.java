@@ -1,6 +1,6 @@
 package com.github.noobymatze.bikerental.business.rental.entity;
 
-import com.github.noobymatze.bikerental.business.articles.entity.Product;
+import com.github.noobymatze.bikerental.business.products.entity.Product;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import javax.persistence.Column;

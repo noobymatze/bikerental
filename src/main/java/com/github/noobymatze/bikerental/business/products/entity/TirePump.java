@@ -1,29 +1,23 @@
-package com.github.noobymatze.bikerental.business.articles.entity;
+package com.github.noobymatze.bikerental.business.products.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * A helmet for a bike.
+ * Represents a tire pump for different Bikes.
  *
  * @author Matthias Metzger
  */
 @Entity
-@Table(name = "helmet")
-public class Helmet extends Product {
+@Table(name = "tirepump")
+public class TirePump extends Product {
 
-    private String model;
-
-    @ManyToOne(optional = true)
+    @ManyToOne(optional = false)
     private Manufacturer manufacturer;
 
     public Manufacturer getManufacturer() {
         return manufacturer;
-    }
-
-    public String getModel() {
-        return model;
     }
 
 }
