@@ -4,12 +4,12 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 /**
- * Represents an employee of the rental company.
+ * Represents a customer of the bike rental.
  *
  * @author Matthias Metzger
  */
 @Entity
-@Table(name = "employee")
-public class Employee extends Person {
+@Table(name = "customer")
+public class Customer extends User {
 
 }

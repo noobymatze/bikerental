@@ -1,11 +1,9 @@
 package com.github.noobymatze.bikerental.business.administration.entity;
 
-import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -17,11 +15,8 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "users")
-public class User implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+@Inheritance(strategy = InheritanceType.JOINED)
+public class User extends Person {
 
     @NotNull
     @Column(unique = true)
@@ -29,10 +24,6 @@ public class User implements Serializable {
 
     @NotNull
     private String password;
-
-    public Long getId() {
-        return id;
-    }
 
     public String getEmail() {
         return email;

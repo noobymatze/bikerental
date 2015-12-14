@@ -1,6 +1,6 @@
-package com.github.noobymatze.bikerental.business.customers.boundary;
+package com.github.noobymatze.bikerental.business.administration.boundary;
 
-import com.github.noobymatze.bikerental.business.customers.entity.Customer;
+import com.github.noobymatze.bikerental.business.administration.entity.Customer;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

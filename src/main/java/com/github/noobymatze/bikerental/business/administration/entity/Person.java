@@ -1,4 +1,4 @@
-package com.github.noobymatze.bikerental.business;
+package com.github.noobymatze.bikerental.business.administration.entity;
 
 import java.io.Serializable;
 import javax.persistence.GeneratedValue;

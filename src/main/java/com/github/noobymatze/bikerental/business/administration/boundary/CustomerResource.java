@@ -1,4 +1,4 @@
-package com.github.noobymatze.bikerental.business.customers.boundary;
+package com.github.noobymatze.bikerental.business.administration.boundary;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
