@@ -10,6 +10,6 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "employee")
-public class Employee extends Person {
+public class Employee extends User {
 
 }
