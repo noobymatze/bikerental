@@ -16,7 +16,7 @@ import lombok.Getter;
 @Entity
 @Table(name = "manufacturer")
 @Getter
-public class Manufacturer implements Serializable {
+public class Company implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

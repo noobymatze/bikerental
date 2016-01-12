@@ -1,14 +1,13 @@
 package com.github.noobymatze.bikerental.business.rental.entity;
 
-import com.github.noobymatze.bikerental.business.products.entity.Product;
 import java.io.Serializable;
 import java.text.DecimalFormat;
+import java.time.ZonedDateTime;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.DecimalMax;
@@ -27,12 +26,7 @@ import lombok.Getter;
  * @author Matthias Metzger
  */
 @Entity
-@Table(
-    name = "discount",
-    uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"time_period_id", "product_id"})
-    }
-)
+@Table(name = "discount")
 @Getter
 public class Discount implements Serializable {
 
@@ -44,19 +38,18 @@ public class Discount implements Serializable {
     @DecimalMax("50.00")
     private double percentage = 0.0;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "time_period_id")
-    private TimePeriod timePeriod;
+    @Column(name = "from_time")
+    private ZonedDateTime fromTime;
 
-    @ManyToOne(optional = false)
-    private Product product;
+	@Column(name = "to_time")
+	private ZonedDateTime toTime;
 
     @Override
     public String toString() {
         DecimalFormat two = new DecimalFormat("#.##");
         return String.format(
-            "%s%% on %s %s",
-            two.format(percentage), product, timePeriod
+            "%s",
+            two.format(percentage)
         );
     }
 

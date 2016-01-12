@@ -14,7 +14,7 @@ import lombok.Getter;
 @Entity
 @Table(name = "bike")
 @Getter
-public class Bike extends Product {
+public class Bike extends RentableItem {
 
     @Column(name = "frame_number", unique = true)
     private String frameNumber;
@@ -22,6 +22,6 @@ public class Bike extends Product {
     private String model;
 
     @ManyToOne(optional = false)
-    private Manufacturer manufacturer;
+    private Company manufacturer;
 
 }

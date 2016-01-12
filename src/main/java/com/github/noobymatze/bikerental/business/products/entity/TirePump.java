@@ -13,9 +13,9 @@ import lombok.Getter;
 @Entity
 @Table(name = "tirepump")
 @Getter
-public class TirePump extends Product {
+public class TirePump extends RentableItem {
 
     @ManyToOne(optional = false)
-    private Manufacturer manufacturer;
+    private Company manufacturer;
 
 }

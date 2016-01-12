@@ -13,11 +13,8 @@ import lombok.Getter;
 @Entity
 @Table(name = "helmet")
 @Getter
-public class Helmet extends Product {
+public class Helmet extends RentableItem {
 
     private String model;
-
-    @ManyToOne(optional = true)
-    private Manufacturer manufacturer;
 
 }
