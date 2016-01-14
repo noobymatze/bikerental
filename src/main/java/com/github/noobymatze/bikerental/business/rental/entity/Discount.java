@@ -1,15 +1,16 @@
 package com.github.noobymatze.bikerental.business.rental.entity;
 
+import com.github.noobymatze.bikerental.business.time.entity.Duration;
 import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.time.ZonedDateTime;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
 import lombok.Getter;
@@ -38,11 +39,8 @@ public class Discount implements Serializable {
     @DecimalMax("50.00")
     private double percentage = 0.0;
 
-    @Column(name = "from_time")
-    private ZonedDateTime fromTime;
-
-	@Column(name = "to_time")
-	private ZonedDateTime toTime;
+    @Embedded
+    private Duration timePeriod;
 
     @Override
     public String toString() {

@@ -1,12 +1,13 @@
-package com.github.noobymatze.bikerental.business.products.entity;
+package com.github.noobymatze.bikerental.business.items.entity;
 
 import com.github.noobymatze.bikerental.business.rental.entity.Discount;
+import com.github.noobymatze.bikerental.business.time.entity.Duration;
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 /**
@@ -15,7 +16,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "rentable_item")
-public class RentableItem extends Item {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class RentableItem extends Item {
 
 	private BigDecimal pricePerMinute;
 
@@ -24,13 +26,11 @@ public class RentableItem extends Item {
 	/**
 	 * Returns the total price for this item via from and to regulations.
 	 * 
-	 * @param from
-	 * @param to
+     * @param tp
 	 * @return 
 	 */
-	public BigDecimal getPriceForTime(ZonedDateTime from, ZonedDateTime to) {
-		long minutes = from.until(to, ChronoUnit.MINUTES);
-		return BigDecimal.valueOf(minutes).multiply(pricePerMinute);
+	public BigDecimal getPriceForTime(Duration tp) {
+		return BigDecimal.valueOf(tp.getMinutes()).multiply(pricePerMinute);
 	}
 	
 }

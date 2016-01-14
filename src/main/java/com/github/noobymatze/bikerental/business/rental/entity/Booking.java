@@ -1,5 +1,6 @@
 package com.github.noobymatze.bikerental.business.rental.entity;
 
+import com.github.noobymatze.bikerental.business.time.entity.Duration;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
@@ -7,6 +8,7 @@ import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.CascadeType.REFRESH;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -36,17 +38,14 @@ public class Booking implements Serializable {
 
     private boolean cancelled;
 
-	@Column(name = "start_time")
-	private ZonedDateTime start;
-
-	@Column(name = "end_time")
-	private ZonedDateTime end;
+    @Embedded
+    private Duration timePeriod;
 
 	@OneToOne(optional = false, cascade = {PERSIST, MERGE, REFRESH})
 	private RentalDetails details;
 
 	public BigDecimal getEstimatedPrice() {
-		return details.getPrice(start, end);
+		return details.getPrice(timePeriod);
 	}
 
 }

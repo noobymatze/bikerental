@@ -1,7 +1,8 @@
 package com.github.noobymatze.bikerental.business.rental.entity;
 
 import com.github.noobymatze.bikerental.business.administration.entity.User;
-import com.github.noobymatze.bikerental.business.products.entity.RentableItem;
+import com.github.noobymatze.bikerental.business.items.entity.RentableItem;
+import com.github.noobymatze.bikerental.business.time.entity.Duration;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.ZonedDateTime;
@@ -16,6 +17,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
@@ -24,6 +26,7 @@ import lombok.Getter;
 @Entity
 @Table(name = "rental_details")
 @Getter
+@Setter
 public class RentalDetails implements Serializable {
 
 	@Id
@@ -31,15 +34,15 @@ public class RentalDetails implements Serializable {
 	private Long id;
 
     @ManyToMany(mappedBy = "reservation")
-    @JoinTable(name = "reservation_has_product")
+    @JoinTable(name = "details_has_items")
     private final List<RentableItem> rentedItems = new ArrayList<>();
 
 	@ManyToOne
 	private User user;
 
-	public BigDecimal getPrice(ZonedDateTime from, ZonedDateTime to) {
+	public BigDecimal getPrice(Duration tp) {
 		return rentedItems.stream().
-			map(item -> item.getPriceForTime(from, to)).
+			map(item -> item.getPriceForTime(tp)).
 			reduce(BigDecimal.ZERO, BigDecimal::add);
 	}
 

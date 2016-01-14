@@ -30,5 +30,4 @@ public class Billing implements Serializable {
 		return tour.getPrice();
 	}
 	
-	
 }
