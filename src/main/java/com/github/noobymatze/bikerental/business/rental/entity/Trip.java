@@ -13,16 +13,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 /**
  *
  * @author Matthias Metzger
  */
 @Entity
-@Table(name = "tour")
+@Table(name = "trip")
 @Getter
-public class Tour implements Serializable {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Trip implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

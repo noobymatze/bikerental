@@ -15,8 +15,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Represents an item in a broken state. It is possible to
- * 
+ * Represents an item in a broken state.
  *
  * @author Matthias Metzger
  */
@@ -40,4 +39,13 @@ public class Broken implements Serializable {
     @ManyToOne(cascade = REFRESH)
     private Item item;
 
+    public static Broken fromItem(Item item, ZonedDateTime time) {
+        Duration d = new Duration();
+        d.setStart(time);
+        Broken broken = new Broken();
+        broken.duration = d;
+        broken.item = item;
+        return broken;
+    }
+    
 }

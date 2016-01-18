@@ -36,6 +36,8 @@ public class CustomerAddress implements Serializable {
     @Getter
     private Customer customer;
 
+    private boolean mainAddress = false;
+
     /**
      * Associate the given customer with the given address.
      * 
@@ -43,11 +45,12 @@ public class CustomerAddress implements Serializable {
      * @param address The address added to the customer.
      * @return A new CustomerAddress representing the address of the customer.
      */
-    public static CustomerAddress withCustomerAndAddress(Customer customer, Address address) {
+    public static CustomerAddress withCustomerAndAddress(Customer customer, Address address, boolean mainAddress) {
         CustomerAddress caddr = new CustomerAddress();
         caddr.address = address;
         caddr.customer = customer;
         caddr.id = CustomerAddressId.of(customer, address);
+        caddr.mainAddress = mainAddress;
         return caddr;
     }
     

@@ -3,15 +3,17 @@ package com.github.noobymatze.bikerental.business.items.boundary;
 import com.github.noobymatze.bikerental.business.items.entity.Broken;
 import com.github.noobymatze.bikerental.business.items.entity.Broken_;
 import com.github.noobymatze.bikerental.business.items.entity.Item;
-import com.github.noobymatze.bikerental.business.items.entity.Reparation;
-import com.github.noobymatze.bikerental.business.items.entity.Reparation_;
+import com.github.noobymatze.bikerental.business.items.entity.Repairment;
+import com.github.noobymatze.bikerental.business.items.entity.Repairment_;
 import com.github.noobymatze.bikerental.business.rental.entity.Booking;
 import com.github.noobymatze.bikerental.business.rental.entity.Booking_;
 import com.github.noobymatze.bikerental.business.rental.entity.RentalDetails;
 import com.github.noobymatze.bikerental.business.rental.entity.RentalDetails_;
-import com.github.noobymatze.bikerental.business.rental.entity.Tour;
-import com.github.noobymatze.bikerental.business.rental.entity.Tour_;
+import com.github.noobymatze.bikerental.business.rental.entity.Trip;
+import com.github.noobymatze.bikerental.business.rental.entity.Trip_;
 import com.github.noobymatze.bikerental.business.time.entity.Duration;
+import java.util.List;
+import static java.util.stream.Collectors.toList;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -76,12 +78,12 @@ public class Items {
      */
     public boolean isInReparation(@NotNull Item item, Duration duration) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Reparation> q = cb.createQuery(Reparation.class);
-        Root<Reparation> reparation = q.from(Reparation.class);
+        CriteriaQuery<Repairment> q = cb.createQuery(Repairment.class);
+        Root<Repairment> reparation = q.from(Repairment.class);
 
 
         q.where(
-            cb.equal(reparation.get(Reparation_.items), item)
+            cb.equal(reparation.get(Repairment_.items), item)
         );
 
         return em.createQuery(q).getResultList().stream().
@@ -120,9 +122,9 @@ public class Items {
      */
     public boolean isOnTour(@NotNull Item item, Duration duration) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Tour> q = cb.createQuery(Tour.class);
-        Root<Tour> tour = q.from(Tour.class);
-        Join<Tour, RentalDetails> details = tour.join(Tour_.details);
+        CriteriaQuery<Trip> q = cb.createQuery(Trip.class);
+        Root<Trip> tour = q.from(Trip.class);
+        Join<Trip, RentalDetails> details = tour.join(Trip_.details);
 
         q.where(
             cb.equal(details.get(RentalDetails_.rentedItems), item)
@@ -130,6 +132,23 @@ public class Items {
 
         return em.createQuery(q).getResultList().stream().
             anyMatch(t -> t.getDuration().containsPart(duration));
+    }
+    
+    /**
+     * Returns all available Items during the specified time.
+     * 
+     * @param duration
+     * @return 
+     */
+    public List<Item> getAvailableItemsDuring(Duration duration) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Item> q = cb.createQuery(Item.class);
+        q.from(Item.class);
+
+        // Highly inefficient, due to In-Memory processing - but the easiest way.
+        return em.createQuery(q).getResultList().stream().
+            filter(item -> isAvailableDuring(item, duration)).
+            collect(toList());
     }
     
 }

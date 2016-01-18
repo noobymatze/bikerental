@@ -1,10 +1,12 @@
 package com.github.noobymatze.bikerental.business.administration.boundary;
 
+import com.github.noobymatze.bikerental.business.addresses.entity.Address;
 import com.github.noobymatze.bikerental.business.administration.entity.Customer;
 import com.github.noobymatze.bikerental.business.items.boundary.Items;
 import com.github.noobymatze.bikerental.business.items.boundary.ItemsUnavailableException;
 import com.github.noobymatze.bikerental.business.items.entity.Item;
 import com.github.noobymatze.bikerental.business.rental.boundary.Bookings;
+import com.github.noobymatze.bikerental.business.rental.entity.Billing;
 import com.github.noobymatze.bikerental.business.rental.entity.Booking;
 import com.github.noobymatze.bikerental.business.rental.entity.Offering;
 import com.github.noobymatze.bikerental.business.rental.entity.RentalDetails;
@@ -135,4 +137,12 @@ public class Customers {
         );
     }
 
+    /**
+     * 
+     * @param customer
+     * @param address 
+     */
+    public void addAddress(Customer customer, Address address) {
+    }
+    
 }

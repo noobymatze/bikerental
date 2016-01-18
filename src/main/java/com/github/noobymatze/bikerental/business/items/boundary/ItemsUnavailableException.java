@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * Should be used, when the items are not available for a given
- * period of 
+ * duration.
  *
  * @author Matthias Metzger
  */

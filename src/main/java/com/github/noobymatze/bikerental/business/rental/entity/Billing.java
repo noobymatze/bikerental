@@ -24,10 +24,24 @@ public class Billing implements Serializable {
 	private Long id;
 
 	@OneToOne(optional = false)
-	private Tour tour;
+	private Trip trip;
+
+    private boolean paid;
 
 	public BigDecimal getPrice() {
-		return tour.getPrice();
+		return trip.getPrice();
 	}
+
+    /**
+     * Create a new Billing from the given trip.
+     * 
+     * @param trip
+     * @return 
+     */
+    public static Billing fromTrip(Trip trip) {
+        Billing billing = new Billing();
+        billing.trip = trip;
+        return billing;
+    }
 	
 }
