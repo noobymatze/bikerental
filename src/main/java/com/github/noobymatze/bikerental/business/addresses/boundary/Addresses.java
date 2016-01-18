@@ -28,13 +28,4 @@ public class Addresses {
         return em.merge(address);
     }
 
-    /**
-     * Remove the given address from the database.
-     * 
-     * @param address The address to be removed.
-     */
-    public void delete(@NotNull Address address) {
-        em.remove(address);
-    }
-
 }

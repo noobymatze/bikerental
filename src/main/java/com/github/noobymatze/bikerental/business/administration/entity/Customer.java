@@ -1,9 +1,13 @@
 package com.github.noobymatze.bikerental.business.administration.entity;
 
+import com.github.noobymatze.bikerental.business.addresses.entity.Address;
 import com.github.noobymatze.bikerental.business.rental.entity.RentalDetails;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REFRESH;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
@@ -39,6 +43,24 @@ public class Customer extends Person {
 
     @OneToMany(mappedBy = "customer")
     private final List<RentalDetails> rentals = new ArrayList<>();
+
+    @OneToMany(cascade = {PERSIST, MERGE, REFRESH}, mappedBy = "customer")
+    private final List<CustomerAddress> addresses = new ArrayList<>();
+
+    /**
+     * Add a new address. If it is the first, it will be the main address.
+     * 
+     * @param address 
+     */
+    public void addAddress(Address address) {
+        CustomerAddress caddress = CustomerAddress.withCustomerAndAddress(
+            this,
+            address,
+            addresses.isEmpty()
+        );
+
+        this.addresses.add(caddress);
+    }
 
     @Override
     public String toString() {

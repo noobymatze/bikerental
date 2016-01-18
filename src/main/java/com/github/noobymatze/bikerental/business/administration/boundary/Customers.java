@@ -2,11 +2,12 @@ package com.github.noobymatze.bikerental.business.administration.boundary;
 
 import com.github.noobymatze.bikerental.business.addresses.entity.Address;
 import com.github.noobymatze.bikerental.business.administration.entity.Customer;
+import com.github.noobymatze.bikerental.business.administration.entity.CustomerAddress;
+import com.github.noobymatze.bikerental.business.administration.entity.CustomerAddress_;
 import com.github.noobymatze.bikerental.business.items.boundary.Items;
 import com.github.noobymatze.bikerental.business.items.boundary.ItemsUnavailableException;
 import com.github.noobymatze.bikerental.business.items.entity.Item;
 import com.github.noobymatze.bikerental.business.rental.boundary.Bookings;
-import com.github.noobymatze.bikerental.business.rental.entity.Billing;
 import com.github.noobymatze.bikerental.business.rental.entity.Booking;
 import com.github.noobymatze.bikerental.business.rental.entity.Offering;
 import com.github.noobymatze.bikerental.business.rental.entity.RentalDetails;
@@ -18,6 +19,9 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -138,11 +142,28 @@ public class Customers {
     }
 
     /**
+     * Remove the given address from the customer.
      * 
+     * @param address The address to be removed.
      * @param customer
-     * @param address 
+     * @throws OnlyOneAddressLeftException
      */
-    public void addAddress(Customer customer, Address address) {
+    public void remove(@NotNull Address address, @NotNull Customer customer) throws OnlyOneAddressLeftException {
+        if (customer.getAddresses().size() == 1) {
+            throw new OnlyOneAddressLeftException("There is only one address left.");
+        }
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<CustomerAddress> q = cb.createQuery(CustomerAddress.class);
+        Root<CustomerAddress> caddr = q.from(CustomerAddress.class);
+
+        q.where(
+            cb.equal(caddr.get(CustomerAddress_.address), address),
+            cb.equal(caddr.get(CustomerAddress_.customer), customer)
+        );
+
+        List<CustomerAddress> results = em.createQuery(q).getResultList();
+        results.forEach(em::remove);
     }
-    
+
 }
