@@ -7,9 +7,9 @@ It uses the capabilities of Java EE 7 to implement the application.
 
 ## Use cases
 
-The following image shows the use cases of this application, as we are required
-to provide some.
+The following image shows the use cases of this application for documentation 
+purposes only.
 
-![Use cases for bikerental](https://raw.github.com/noobymatze/bikerental/branch/master/bikerental-use-cases-final.png)
+![Use cases for bikerental](https://raw.githubusercontent.com/noobymatze/bikerental/master/bikerental-use-cases-final.png)
 
 
