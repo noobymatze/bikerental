@@ -12,7 +12,7 @@ import lombok.Getter;
 @Entity
 @Table(name = "helmet")
 @Getter
-public class Helmet extends RentableItem {
+public class Helmet extends Item {
 
     private String model;
 

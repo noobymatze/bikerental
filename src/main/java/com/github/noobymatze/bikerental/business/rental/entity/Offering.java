@@ -1,19 +1,20 @@
 package com.github.noobymatze.bikerental.business.rental.entity;
 
+import com.github.noobymatze.bikerental.business.items.entity.Item;
 import com.github.noobymatze.bikerental.business.time.entity.Duration;
 import java.io.Serializable;
-import java.text.DecimalFormat;
-import java.time.ZonedDateTime;
-import javax.persistence.Column;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.DecimalMin;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Represents a discount for the specified product during the given time
@@ -27,28 +28,21 @@ import lombok.Getter;
  * @author Matthias Metzger
  */
 @Entity
-@Table(name = "discount")
+@Table(name = "offering")
 @Getter
-public class Discount implements Serializable {
+@Setter
+public class Offering implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @DecimalMin("1.00")
-    @DecimalMax("50.00")
-    private double percentage = 0.0;
+    private BigDecimal pricePerMinute;
 
     @Embedded
-    private Duration timePeriod;
+    private Duration duration;
 
-    @Override
-    public String toString() {
-        DecimalFormat two = new DecimalFormat("#.##");
-        return String.format(
-            "%s",
-            two.format(percentage)
-        );
-    }
+    @ManyToMany
+    private final List<Item> items = new ArrayList<>();
 
 }

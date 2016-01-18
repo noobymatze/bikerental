@@ -1,6 +1,6 @@
 package com.github.noobymatze.bikerental.business.administration.boundary;
 
-import com.github.noobymatze.bikerental.business.administration.entity.User;
+import com.github.noobymatze.bikerental.business.administration.entity.Customer;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.Stateless;
@@ -16,7 +16,7 @@ import javax.persistence.criteria.Root;
  * @author Matthias Metzger
  */
 @Stateless
-public class Users {
+public class Authenticator {
 
     @PersistenceContext(unitName = "bikerental")
     EntityManager em;
@@ -28,17 +28,17 @@ public class Users {
      * @param password The password belonging to the user.
      * @return Optional user, if they could be found.
      */
-    public Optional<User> tryAuthenticate(String email, String password) {
+    public Optional<Customer> tryAuthenticate(String email, String password) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<User> query = cb.createQuery(User.class);
-        Root<User> user = query.from(User.class);
+        CriteriaQuery<Customer> query = cb.createQuery(Customer.class);
+        Root<Customer> user = query.from(Customer.class);
 
         query.where(
             cb.equal(user.get("email"), email),
             cb.equal(user.get("password"), password)
         );
 
-        List<User> users = em.createQuery(query).getResultList();
+        List<Customer> users = em.createQuery(query).getResultList();
         return users.isEmpty() ? 
             Optional.empty() :
             Optional.of(users.get(0));

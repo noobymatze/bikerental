@@ -13,7 +13,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Getter;
@@ -39,13 +38,13 @@ public class Booking implements Serializable {
     private boolean cancelled;
 
     @Embedded
-    private Duration timePeriod;
+    private Duration duration;
 
 	@OneToOne(optional = false, cascade = {PERSIST, MERGE, REFRESH})
 	private RentalDetails details;
 
 	public BigDecimal getEstimatedPrice() {
-		return details.getPrice(timePeriod);
+		return details.getPrice(duration);
 	}
 
 }

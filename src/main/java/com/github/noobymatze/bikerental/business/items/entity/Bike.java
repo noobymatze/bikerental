@@ -14,14 +14,11 @@ import lombok.Getter;
 @Entity
 @Table(name = "bike")
 @Getter
-public class Bike extends RentableItem {
+public class Bike extends Item {
 
     @Column(name = "frame_number", unique = true)
     private String frameNumber;
 
     private String model;
-
-    @ManyToOne(optional = false)
-    private Company manufacturer;
 
 }

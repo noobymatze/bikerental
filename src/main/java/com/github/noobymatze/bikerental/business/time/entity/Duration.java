@@ -30,7 +30,7 @@ public class Duration implements Serializable {
      * @param start 
      */
     public void setStart(ZonedDateTime start) {
-        if (nonNull(end) && start.compareTo(end) > 0) {
+        if (nonNull(end) && nonNull(start) && start.compareTo(end) > 0) {
             throw new IllegalArgumentException("The starting time cannot be greater than the end time.");
         }
 
@@ -44,7 +44,7 @@ public class Duration implements Serializable {
      * @param end 
      */
     public void setEnd(ZonedDateTime end) {
-        if (nonNull(start) && end.compareTo(start) < 0) {
+        if (nonNull(start) && nonNull(end) && end.compareTo(start) < 0) {
             throw new IllegalArgumentException("The ending time cannot be smaller than the starting time.");
         }
 

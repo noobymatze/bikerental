@@ -1,6 +1,9 @@
 package com.github.noobymatze.bikerental.business.administration.boundary;
 
 import com.github.noobymatze.bikerental.business.administration.entity.Customer;
+import com.github.noobymatze.bikerental.business.items.entity.Item;
+import com.github.noobymatze.bikerental.business.rental.entity.Booking;
+import com.github.noobymatze.bikerental.business.time.entity.Duration;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -41,6 +44,19 @@ public class Customers {
      */
     public List<Customer> getAll() {
         return em.createQuery("SELECT c FROM Customer c", Customer.class).getResultList();
+    }
+
+    /**
+     * Creates a valid with the given items.
+     * 
+     * @param items
+     * @param duration
+     * @return 
+     */
+    public Booking book(Customer customer, List<Item> items, Duration duration) {
+        Booking booking = new Booking();
+
+        return booking;
     }
 
 }
