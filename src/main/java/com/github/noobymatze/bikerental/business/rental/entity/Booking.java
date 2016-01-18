@@ -15,7 +15,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * Represents the reservation for a product for a specific period of
@@ -24,8 +28,12 @@ import lombok.Getter;
  * @author Matthias Metzger
  */
 @Entity
-@Table(name = "reservation")
+@Table(name = "booking")
 @Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Booking implements Serializable {
 
     @Id
@@ -35,7 +43,7 @@ public class Booking implements Serializable {
     @Column(name = "created_at")
     private ZonedDateTime createdAt;
 
-    private boolean cancelled;
+    private boolean canceled;
 
     @Embedded
     private Duration duration;

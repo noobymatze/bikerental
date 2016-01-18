@@ -29,13 +29,13 @@ public class Tour implements Serializable {
 	private Long id;
 
     @Embedded
-    private Duration timePeriod;
+    private Duration duration;
 
 	@OneToOne(optional = false, cascade = {PERSIST, MERGE, REFRESH})
 	private RentalDetails details;
 
 	public BigDecimal getPrice() {
-		return details.getPrice(timePeriod);
+		return details.getPrice(duration);
 	}
 
 }

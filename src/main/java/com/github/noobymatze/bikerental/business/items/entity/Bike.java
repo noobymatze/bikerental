@@ -2,7 +2,6 @@ package com.github.noobymatze.bikerental.business.items.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 

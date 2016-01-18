@@ -18,7 +18,7 @@ import lombok.Getter;
  * @author Matthias Metzger
  */
 @Entity
-@Table(name = "manufacturer")
+@Table(name = "company")
 @Getter
 public class Company implements Serializable {
 

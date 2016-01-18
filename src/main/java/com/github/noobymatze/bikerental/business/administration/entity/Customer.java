@@ -1,6 +1,5 @@
 package com.github.noobymatze.bikerental.business.administration.entity;
 
-import com.github.noobymatze.bikerental.business.rental.entity.Booking;
 import com.github.noobymatze.bikerental.business.rental.entity.RentalDetails;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ import lombok.Getter;
  * @author Matthias Metzger
  */
 @Entity
-@Table(name = "users")
+@Table(name = "customer")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Getter
 public class Customer extends Person {

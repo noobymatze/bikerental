@@ -8,6 +8,7 @@ import static java.util.Objects.nonNull;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
@@ -15,6 +16,7 @@ import lombok.Getter;
  */
 @Embeddable
 @Getter
+@Setter
 public class Duration implements Serializable {
 
     @Column(name = "start_time")
@@ -62,6 +64,18 @@ public class Duration implements Serializable {
         }
 
         return start.until(end, ChronoUnit.MINUTES);
+    }
+    
+    /**
+     * Tests whether any part of the other duration is inside
+     * this duration.
+     * 
+     * @param other
+     * @return 
+     */
+    public boolean containsPart(Duration other) {
+        return !(start != null && other.end.compareTo(start) < 0 
+            || (end != null && other.start.compareTo(end) > 0));
     }
     
 }

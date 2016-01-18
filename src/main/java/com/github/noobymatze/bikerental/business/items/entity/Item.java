@@ -27,7 +27,7 @@ import lombok.Setter;
  */
 @Entity
 @Table(name = "item")
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 @Getter
 @Setter
 public class Item implements Serializable {
