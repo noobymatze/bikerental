@@ -9,6 +9,8 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 /**
  * Provides access to the users in the database.
@@ -16,6 +18,8 @@ import javax.persistence.criteria.Root;
  * @author Matthias Metzger
  */
 @Stateless
+@NoArgsConstructor
+@AllArgsConstructor
 public class Authenticator {
 
     @PersistenceContext(unitName = "bikerental")

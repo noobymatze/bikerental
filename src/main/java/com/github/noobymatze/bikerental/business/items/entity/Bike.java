@@ -18,6 +18,4 @@ public class Bike extends Item {
     @Column(name = "frame_number", unique = true)
     private String frameNumber;
 
-    private String model;
-
 }

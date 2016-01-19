@@ -41,15 +41,12 @@ public class Item implements Serializable {
     @Column(name = "purchase_date")
     private ZonedDateTime purchaseDate;
 
-	private BigDecimal pricePerMinute;
-
     private boolean deleted = false;
 
-	@ManyToOne(cascade = {PERSIST, MERGE, REFRESH})
+	@ManyToOne(optional = false, cascade = {PERSIST, MERGE, REFRESH})
 	private Company manufacturer;
 
-    public BigDecimal getPriceForDuration(Duration duration) {
-        return BigDecimal.valueOf(duration.getMinutes()).multiply(pricePerMinute);
-    }
-	
+    @ManyToOne(optional = false, cascade = {PERSIST, MERGE, REFRESH})
+    private ItemModel model;
+
 }

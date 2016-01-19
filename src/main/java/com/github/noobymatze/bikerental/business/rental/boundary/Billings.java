@@ -5,12 +5,16 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 /**
  *
  * @author Matthias Metzger
  */
 @Stateless
+@NoArgsConstructor
+@AllArgsConstructor
 public class Billings {
     
     @PersistenceContext

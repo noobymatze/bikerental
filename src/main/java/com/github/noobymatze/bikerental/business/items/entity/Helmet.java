@@ -14,6 +14,4 @@ import lombok.Getter;
 @Getter
 public class Helmet extends Item {
 
-    private String model;
-
 }

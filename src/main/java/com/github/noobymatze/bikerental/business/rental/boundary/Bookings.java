@@ -14,12 +14,16 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
 import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 /**
  *
  * @author Matthias Metzger
  */
 @Stateless
+@NoArgsConstructor
+@AllArgsConstructor
 public class Bookings {
 
     @PersistenceContext

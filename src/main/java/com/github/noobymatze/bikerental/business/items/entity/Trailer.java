@@ -2,6 +2,8 @@ package com.github.noobymatze.bikerental.business.items.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  *
@@ -9,6 +11,8 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "trailer")
+@Getter
+@Setter
 public class Trailer extends Item {
 
     private boolean roof = false;

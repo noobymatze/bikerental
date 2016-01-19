@@ -2,6 +2,8 @@ package com.github.noobymatze.bikerental.business.administration.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 
 /**
  * Represents an employee of the rental company.

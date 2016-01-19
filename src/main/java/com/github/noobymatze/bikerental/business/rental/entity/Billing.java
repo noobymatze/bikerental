@@ -26,7 +26,7 @@ public class Billing implements Serializable {
 	@OneToOne(optional = false)
 	private Trip trip;
 
-    private boolean paid;
+    private boolean payed;
 
 	public BigDecimal getPrice() {
 		return trip.getPrice();

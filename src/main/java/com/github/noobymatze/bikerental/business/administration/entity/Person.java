@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Represents a real world person with a name and some contact information.
@@ -14,6 +15,7 @@ import lombok.Getter;
  */
 @MappedSuperclass
 @Getter
+@Setter
 public abstract class Person implements Serializable {
 
     @Id

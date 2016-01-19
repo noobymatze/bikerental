@@ -9,14 +9,30 @@
         <class>com.github.noobymatze.bikerental.business.addresses.entity.Country</class>
         <class>com.github.noobymatze.bikerental.business.addresses.entity.Street</class>
         <class>com.github.noobymatze.bikerental.business.addresses.entity.Zipcode</class>
-        <class>com.github.noobymatze.bikerental.business.customers.entity.Customer</class>
-        <class>com.github.noobymatze.bikerental.business.customers.entity.CustomerAddress</class>
+        <class>com.github.noobymatze.bikerental.business.administration.entity.Person</class>
+        <class>com.github.noobymatze.bikerental.business.administration.entity.Customer</class>
+        <class>com.github.noobymatze.bikerental.business.administration.entity.CustomerAddress</class>
+        <class>com.github.noobymatze.bikerental.business.administration.entity.CustomerAddressId</class>
+        <class>com.github.noobymatze.bikerental.business.administration.entity.Employee</class>
+        <class>com.github.noobymatze.bikerental.business.items.entity.Bike</class>
+        <class>com.github.noobymatze.bikerental.business.items.entity.Broken</class>
+        <class>com.github.noobymatze.bikerental.business.items.entity.Company</class>
+        <class>com.github.noobymatze.bikerental.business.items.entity.Helmet</class>
+        <class>com.github.noobymatze.bikerental.business.items.entity.Item</class>
+        <class>com.github.noobymatze.bikerental.business.items.entity.ItemModel</class>
+        <class>com.github.noobymatze.bikerental.business.items.entity.Repairment</class>
+        <class>com.github.noobymatze.bikerental.business.items.entity.Trailer</class>
+        <class>com.github.noobymatze.bikerental.business.rental.entity.Billing</class>
+        <class>com.github.noobymatze.bikerental.business.rental.entity.Booking</class>
+        <class>com.github.noobymatze.bikerental.business.rental.entity.Offer</class>
+        <class>com.github.noobymatze.bikerental.business.rental.entity.RentalDetails</class>
+        <class>com.github.noobymatze.bikerental.business.rental.entity.Trip</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"></property>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3317/bikerental_it"></property>
-            <property name="javax.persistence.jdbc.user" value="tester"></property>
-            <property name="javax.persistence.jdbc.password" value="testing"></property>
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/bikerental_it"></property>
+            <property name="javax.persistence.jdbc.user" value="root"></property>
+            <property name="javax.persistence.jdbc.password" value="sql"></property>
 
             <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"></property>
             <!--<property name="hibernate.hbm2ddl.auto" value="update"/>-->

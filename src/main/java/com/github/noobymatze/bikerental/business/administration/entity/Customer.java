@@ -15,7 +15,11 @@ import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * Represents an administrator of the rental company. 
@@ -27,6 +31,10 @@ import lombok.Getter;
 @Table(name = "customer")
 @Inheritance(strategy = InheritanceType.JOINED)
 @Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Customer extends Person {
 
     @NotNull

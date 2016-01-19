@@ -1,6 +1,7 @@
 package com.github.noobymatze.bikerental.business.rental.entity;
 
 import com.github.noobymatze.bikerental.business.items.entity.Item;
+import com.github.noobymatze.bikerental.business.items.entity.ItemModel;
 import com.github.noobymatze.bikerental.business.time.entity.Duration;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -28,10 +29,10 @@ import lombok.Setter;
  * @author Matthias Metzger
  */
 @Entity
-@Table(name = "offering")
+@Table(name = "offer")
 @Getter
 @Setter
-public class Offering implements Serializable {
+public class Offer implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,6 +44,6 @@ public class Offering implements Serializable {
     private Duration duration;
 
     @ManyToMany
-    private final List<Item> items = new ArrayList<>();
+    private final List<ItemModel> models = new ArrayList<>();
 
 }

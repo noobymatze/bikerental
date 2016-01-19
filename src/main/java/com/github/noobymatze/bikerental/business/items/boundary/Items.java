@@ -1,5 +1,6 @@
 package com.github.noobymatze.bikerental.business.items.boundary;
 
+import com.github.noobymatze.bikerental.business.items.entity.Bike;
 import com.github.noobymatze.bikerental.business.items.entity.Broken;
 import com.github.noobymatze.bikerental.business.items.entity.Broken_;
 import com.github.noobymatze.bikerental.business.items.entity.Item;
@@ -22,12 +23,16 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Root;
 import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 /**
  *
  * @author Matthias Metzger
  */
 @Stateless
+@NoArgsConstructor
+@AllArgsConstructor
 public class Items {
 
     @PersistenceContext
@@ -149,6 +154,15 @@ public class Items {
         return em.createQuery(q).getResultList().stream().
             filter(item -> isAvailableDuring(item, duration)).
             collect(toList());
+    }
+
+    /**
+     * 
+     * @param item
+     * @return 
+     */
+    public Bike save(@NotNull Bike item) {
+        return em.merge(item);
     }
     
 }

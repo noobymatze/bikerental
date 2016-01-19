@@ -9,7 +9,7 @@ import com.github.noobymatze.bikerental.business.items.boundary.ItemsUnavailable
 import com.github.noobymatze.bikerental.business.items.entity.Item;
 import com.github.noobymatze.bikerental.business.rental.boundary.Bookings;
 import com.github.noobymatze.bikerental.business.rental.entity.Booking;
-import com.github.noobymatze.bikerental.business.rental.entity.Offering;
+import com.github.noobymatze.bikerental.business.rental.entity.Offer;
 import com.github.noobymatze.bikerental.business.rental.entity.RentalDetails;
 import com.github.noobymatze.bikerental.business.time.entity.Duration;
 import java.time.ZonedDateTime;
@@ -23,6 +23,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 /**
  * Provides methods for manipulating and accessing customers 
@@ -31,6 +33,8 @@ import javax.validation.constraints.NotNull;
  * @author Matthias Metzger
  */
 @Stateless
+@NoArgsConstructor
+@AllArgsConstructor
 public class Customers {
 
     @PersistenceContext(unitName = "bikerental")
@@ -48,6 +52,7 @@ public class Customers {
      * @param customer The customer instance to be saved.
      * @return A new instance, which contains the automatically
      * incremented id.
+     * @throws 
      */
     public Customer save(@NotNull Customer customer) {
         return em.merge(customer);
@@ -78,7 +83,7 @@ public class Customers {
      */
     public Booking book(
         Customer customer,
-        List<Item> items,
+        List<? extends Item> items,
         Duration duration
     ) throws ItemsUnavailableException, TooManyBookingsForDurationException {
         return createBooking(customer, items, duration, null);
@@ -97,19 +102,23 @@ public class Customers {
      */
     public Booking bookWithOffering(
         @NotNull Customer customer,
-        @NotNull List<Item> items,
+        @NotNull List<? extends Item> items,
         @NotNull Duration duration, 
-        @NotNull Offering offering
+        @NotNull Offer offering
     ) throws ItemsUnavailableException, TooManyBookingsForDurationException {
         return createBooking(customer, items, duration, offering);
     }
     
     private Booking createBooking(
-        Customer customer,
-        List<Item> toBeRented,
-        Duration duration, 
-        Offering offering
+        @NotNull Customer customer,
+        @NotNull List<? extends Item> toBeRented,
+        @NotNull Duration duration, 
+        Offer offering
     ) throws ItemsUnavailableException, TooManyBookingsForDurationException {
+        if (toBeRented.isEmpty()) {
+            throw new IllegalArgumentException("There are no items to be rented.");
+        }
+
         List<Item> unavailableItems = toBeRented.stream().
             filter(item -> !items.isAvailableDuring(item, duration)).
             collect(toList());
@@ -135,7 +144,7 @@ public class Customers {
             duration(duration).
             details(RentalDetails.builder().
                 customer(customer).
-                offering(offering).
+                offer(offering).
                 build()).
             build()
         );

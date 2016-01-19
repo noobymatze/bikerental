@@ -46,20 +46,27 @@ public class RentalDetails implements Serializable {
     private final List<Item> rentedItems = new ArrayList<>();
 
     @ManyToOne(cascade = {REFRESH})
-    private Offering offering;
+    private Offer offer;
 
 	@ManyToOne(optional = false)
 	private Customer customer;
 
-	public BigDecimal getPrice(Duration tp) {
-        if (nonNull(offering)) {
-            return BigDecimal.
-                valueOf(tp.getMinutes()).
-                multiply(offering.getPricePerMinute());
+	public BigDecimal getPrice(Duration duration) {
+        if (nonNull(offer)) {
+            BigDecimal priceForItemsNotInOffer = rentedItems.stream().
+                map(Item::getModel).
+                filter(model -> !offer.getModels().contains(model)).
+                map(model -> model.getPriceForDuration(duration)).
+                reduce(BigDecimal.ZERO, BigDecimal::add);
+
+            return BigDecimal.valueOf(duration.getMinutes()).
+                multiply(offer.getPricePerMinute()).
+                add(priceForItemsNotInOffer);
         }
         else {
             return rentedItems.stream().
-                map(item -> item.getPriceForDuration(tp)).
+                map(Item::getModel).
+                map(model -> model.getPriceForDuration(duration)).
                 reduce(BigDecimal.ZERO, BigDecimal::add);
         }
 	}

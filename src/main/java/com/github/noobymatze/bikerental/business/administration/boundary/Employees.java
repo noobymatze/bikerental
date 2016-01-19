@@ -19,12 +19,16 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 /**
  *
  * @author Matthias Metzger
  */
 @Stateless
+@NoArgsConstructor
+@AllArgsConstructor
 public class Employees {
 
     @PersistenceContext
@@ -96,6 +100,10 @@ public class Employees {
         r.setDuration(duration);
         r.setCompany(company);
         return em.merge(r);
+    }
+
+    public Employee save(Employee bernddasbrot) {
+        return em.merge(bernddasbrot);
     }
     
 }

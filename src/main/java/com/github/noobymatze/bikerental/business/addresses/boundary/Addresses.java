@@ -5,6 +5,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 /**
  * Provides methods for accessing address entities.
@@ -12,6 +14,8 @@ import javax.validation.constraints.NotNull;
  * @author Matthias Metzger
  */
 @Stateless
+@AllArgsConstructor
+@NoArgsConstructor
 public class Addresses {
 
     @PersistenceContext(unitName = "bikerental")

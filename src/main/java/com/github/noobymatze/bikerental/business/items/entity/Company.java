@@ -10,7 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * Represents a manufacturer. 
@@ -20,6 +24,10 @@ import lombok.Getter;
 @Entity
 @Table(name = "company")
 @Getter
+@Builder
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Company implements Serializable {
 
     @Id
