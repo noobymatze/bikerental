@@ -41,6 +41,13 @@ of properties for different items. Instead of throwing every property in
 one table, this guarantees a simple and flexiable way to extend the system
 later on.
 
+To be able to create offers, every item must belong to an `ItemModel`. Without
+it, a given offer could only be valid for some actual items, which would
+mean adding all of them explicitely to the `Offer`. Furthermore one would
+not be able to distinguish, whether the given `Item` actually needs to be
+booked or is only one of a category of items, which could be booked to 
+get a discount. That's the problem, the `ItemModel` solves.
+
 An item can be `Broken` and a `Broken` item can be scheduled for or 
 currently be, in a `Repairment`. This capability can be used to track
 the durability of an item over time and to understand when to buy new
@@ -52,14 +59,17 @@ a specific period of time, all these Objects need to be taken into account.
 ### Rental
 
 The actual rental of a bike has a defined lifecycle. At first it can be
-booked for a period of time. The `Booking` can of course be canceled. When
-the time has come to go on a `Trip` or `Tour`, the `Customer` will be greeted
+booked for a period of time. The `Booking` can of course be canceled. 
+Additionally the details of the `Booking` can contain an `Offer` for a
+number of `ItemModel`s. 
+
+When the time has come to go on a `Trip` or `Tour`, the `Customer` will be greeted
 and given the rented items by an `Employee`, thus resulting in a state of `Tour`
-in the UML diagram. 
+in the UML diagram.
 
 When the `Customer` returns, he will be welcomed back by an `Employee`, who
-looks for `Broken` items and created a billing for the corresponding `Tour`.
-Since the details are all the same, they can be found separately in the `RentailDetails`
+looks for `Broken` items and creates a billing for the corresponding `Tour`.
+Since the details are all the same, they can be found separately in the `RentalDetails`
 table. 
 
 ## Use cases
