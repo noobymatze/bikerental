@@ -38,7 +38,7 @@ for the inheritance: `@Inheritance(strategy=JOINED)`.
 This means the corresponding database schema will contain a table for `Item`
 and for each subclass. This decision was based on the possibly large range
 of properties for different items. Instead of throwing every property in
-one table, this guarantees a simple and flexiable way to extend the system
+one table, this guarantees a simple and flexible way to extend the system
 later on.
 
 To be able to create offers, every item must belong to an `ItemModel`. Without
