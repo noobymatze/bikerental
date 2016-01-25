@@ -49,7 +49,7 @@ booked or is only one of a category of items, which could be booked to
 get a discount. That's the problem, the `ItemModel` solves.
 
 An item can be `Broken` and a `Broken` item can be scheduled for or 
-currently be, in a `Repairment`. This capability can be used to track
+currently be in, a `Repairment`. This capability can be used to track
 the durability of an item over time and to understand when to buy new
 Items.
 
