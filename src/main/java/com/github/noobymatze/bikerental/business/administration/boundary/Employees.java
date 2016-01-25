@@ -4,13 +4,16 @@ import com.github.noobymatze.bikerental.business.administration.entity.Employee;
 import com.github.noobymatze.bikerental.business.items.entity.Broken;
 import com.github.noobymatze.bikerental.business.items.entity.Company;
 import com.github.noobymatze.bikerental.business.items.entity.Item;
+import com.github.noobymatze.bikerental.business.items.entity.ItemModel;
 import com.github.noobymatze.bikerental.business.items.entity.Repairment;
 import com.github.noobymatze.bikerental.business.rental.boundary.Billings;
 import com.github.noobymatze.bikerental.business.rental.boundary.Trips;
 import com.github.noobymatze.bikerental.business.rental.entity.Billing;
 import com.github.noobymatze.bikerental.business.rental.entity.Booking;
+import com.github.noobymatze.bikerental.business.rental.entity.Offer;
 import com.github.noobymatze.bikerental.business.rental.entity.Trip;
 import com.github.noobymatze.bikerental.business.time.entity.Duration;
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
 import java.util.List;
 import static java.util.Objects.nonNull;
@@ -48,9 +51,9 @@ public class Employees {
      * @param booking
      * @return 
      */
-    public Trip sendCustomersOnTheirWay(Employee employee, Booking booking) {
+    public Trip sendCustomersOnTheirWay(Employee employee, Booking booking, ZonedDateTime time) {
         Duration duration = new Duration();
-        duration.setStart(ZonedDateTime.now());
+        duration.setStart(time);
 
         return trips.save(Trip.builder().
             duration(duration).
@@ -81,6 +84,15 @@ public class Employees {
         return billings.save(
             Billing.fromTrip(trip)
         );
+    }
+
+    public Offer makeOfferDuring(String name, Duration duration, List<ItemModel> items, BigDecimal combinedPrice) {
+        Offer offer = new Offer();
+        offer.setName(name);
+        offer.setDuration(duration);
+        offer.setPricePerMinute(combinedPrice);
+        offer.getModels().addAll(items);
+        return em.merge(offer);
     }
 
     /**

@@ -74,8 +74,9 @@ public class Duration implements Serializable {
      * @return 
      */
     public boolean containsPart(Duration other) {
-        return !(start != null && other.end.compareTo(start) < 0 
-            || (end != null && other.start.compareTo(end) > 0));
+        return (other.start.isBefore(start) && other.end.isAfter(start)) 
+            || (other.start.isBefore(end) && other.end.isAfter(end))
+            || (other.start.isEqual(start) && other.end.isEqual(end));
     }
     
 }

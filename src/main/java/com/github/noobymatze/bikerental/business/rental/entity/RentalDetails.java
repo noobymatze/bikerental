@@ -2,12 +2,16 @@ package com.github.noobymatze.bikerental.business.rental.entity;
 
 import com.github.noobymatze.bikerental.business.administration.entity.Customer;
 import com.github.noobymatze.bikerental.business.items.entity.Item;
+import com.github.noobymatze.bikerental.business.items.entity.ItemModel;
 import com.github.noobymatze.bikerental.business.time.entity.Duration;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import static java.util.Objects.nonNull;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import static javax.persistence.CascadeType.REFRESH;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -53,11 +57,20 @@ public class RentalDetails implements Serializable {
 
 	public BigDecimal getPrice(Duration duration) {
         if (nonNull(offer)) {
-            BigDecimal priceForItemsNotInOffer = rentedItems.stream().
-                map(Item::getModel).
-                filter(model -> !offer.getModels().contains(model)).
-                map(model -> model.getPriceForDuration(duration)).
-                reduce(BigDecimal.ZERO, BigDecimal::add);
+            Map<ItemModel, Integer> dist = offer.getModels().stream().
+                collect(Collectors.toMap(Function.identity(), e -> 1, (a, b) -> a + b));
+
+            BigDecimal priceForItemsNotInOffer = BigDecimal.ZERO;
+            for (Item item : rentedItems) {
+                Integer counts = dist.getOrDefault(item.getModel(), 0);
+                if (counts > 0) {
+                    dist.put(item.getModel(), counts - 1);
+                }
+                else {
+                    priceForItemsNotInOffer = priceForItemsNotInOffer.
+                        add(item.getModel().getPriceForDuration(duration));
+                }
+            }
 
             return BigDecimal.valueOf(duration.getMinutes()).
                 multiply(offer.getPricePerMinute()).

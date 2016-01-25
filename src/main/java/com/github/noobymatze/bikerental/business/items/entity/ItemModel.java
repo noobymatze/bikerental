@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,6 +43,7 @@ public class ItemModel implements Serializable {
     @OneToMany(mappedBy = "model")
     private final List<Item> items = new ArrayList<>();
 
+    @NotNull
     private BigDecimal pricePerMinute;
 
     public BigDecimal getPriceForDuration(Duration duration) {

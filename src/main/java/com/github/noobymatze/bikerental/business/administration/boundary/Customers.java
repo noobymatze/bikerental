@@ -136,16 +136,20 @@ public class Customers {
                 customer, 
                 duration
             );
-        }
+        } 
+        
+        RentalDetails details = RentalDetails.builder().
+            customer(customer).
+            offer(offering).
+            build();
+
+        details.getRentedItems().addAll(toBeRented);
 
         return bookings.save(
             Booking.builder().
             createdAt(ZonedDateTime.now()).
             duration(duration).
-            details(RentalDetails.builder().
-                customer(customer).
-                offer(offering).
-                build()).
+            details(details).
             build()
         );
     }

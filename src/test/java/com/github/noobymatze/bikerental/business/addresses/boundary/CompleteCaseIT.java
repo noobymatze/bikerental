@@ -11,16 +11,23 @@ import com.github.noobymatze.bikerental.business.addresses.entity.Zipcode;
 import com.github.noobymatze.bikerental.business.administration.boundary.Authenticator;
 import com.github.noobymatze.bikerental.business.administration.boundary.Customers;
 import com.github.noobymatze.bikerental.business.administration.boundary.Employees;
+import com.github.noobymatze.bikerental.business.administration.boundary.TooManyBookingsForDurationException;
 import com.github.noobymatze.bikerental.business.administration.entity.Customer;
 import com.github.noobymatze.bikerental.business.administration.entity.Employee;
 import com.github.noobymatze.bikerental.business.items.boundary.Items;
+import com.github.noobymatze.bikerental.business.items.boundary.ItemsUnavailableException;
 import com.github.noobymatze.bikerental.business.items.entity.Bike;
 import com.github.noobymatze.bikerental.business.items.entity.Company;
 import com.github.noobymatze.bikerental.business.items.entity.Helmet;
+import com.github.noobymatze.bikerental.business.items.entity.Item;
 import com.github.noobymatze.bikerental.business.items.entity.ItemModel;
 import com.github.noobymatze.bikerental.business.rental.boundary.Billings;
 import com.github.noobymatze.bikerental.business.rental.boundary.Bookings;
 import com.github.noobymatze.bikerental.business.rental.boundary.Trips;
+import com.github.noobymatze.bikerental.business.rental.entity.Billing;
+import com.github.noobymatze.bikerental.business.rental.entity.Booking;
+import com.github.noobymatze.bikerental.business.rental.entity.Offer;
+import com.github.noobymatze.bikerental.business.rental.entity.Trip;
 import com.github.noobymatze.bikerental.business.time.entity.Duration;
 import java.math.BigDecimal;
 import java.time.ZoneId;
@@ -28,6 +35,8 @@ import java.time.ZonedDateTime;
 import static java.util.Arrays.asList;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityTransaction;
 import org.junit.Assert;
 import org.junit.Before;
@@ -57,22 +66,23 @@ public class CompleteCaseIT {
         name("FH Wedel").
         build();
 
-    protected final ItemModel unicornBike = ItemModel.builder().
+    protected final ItemModel unicornBike = emp.em().merge(ItemModel.builder().
         model("Unicorn").
-        pricePerMinute(BigDecimal.valueOf(0.08)).
-        build();
+        pricePerMinute(BigDecimal.valueOf(0.04)).
+        build());
 
     protected final ItemModel optimusHelmet = ItemModel.builder().
         model("Optimus Prime").
         pricePerMinute(BigDecimal.valueOf(0.02)).
         build();
 
-    protected final Duration fifteenthOfJanuar;
+    protected final Duration fifteenthOfJanuary;
 
-    protected final List<Bike> randomBikes = asList(
+    protected final List<Item> randomBikes = asList(
         createBike(null, unicornBike, fh),
         createBike(null, unicornBike, fh),
-        createBike(null, unicornBike, fh)
+        createBike(null, unicornBike, fh),
+        createHelmet(null, optimusHelmet, fh)
     );
 
     protected final Customer matthias = Customer.builder().
@@ -91,9 +101,9 @@ public class CompleteCaseIT {
         this.matthias.setFirstName("Matthias");
         this.matthias.setLastName("Metzger");
 
-        this.fifteenthOfJanuar = new Duration();
-        this.fifteenthOfJanuar.setStart(ZonedDateTime.of(2016, 1, 15, 8, 0, 0, 0, ZoneId.systemDefault()));
-        this.fifteenthOfJanuar.setEnd(ZonedDateTime.of(2016, 1, 15, 16, 0, 0, 0, ZoneId.systemDefault()));
+        this.fifteenthOfJanuary = new Duration();
+        this.fifteenthOfJanuary.setStart(ZonedDateTime.of(2016, 1, 15, 8, 0, 0, 0, ZoneId.systemDefault()));
+        this.fifteenthOfJanuary.setEnd(ZonedDateTime.of(2016, 1, 15, 16, 0, 0, 0, ZoneId.systemDefault()));
     }
 
     @Before
@@ -139,8 +149,38 @@ public class CompleteCaseIT {
     public void testEverything() {
         EntityTransaction tx = emp.em().getTransaction();
         tx.begin();
-        Optional<Customer> value = authenticator.tryAuthenticate(matthias.getEmail(), matthias.getPassword());
-        Assert.assertTrue(value.isPresent());
+        Optional<Customer> matthiasDB = authenticator.tryAuthenticate(
+            matthias.getEmail(),
+            matthias.getPassword()
+        );
+        Assert.assertTrue(matthiasDB.isPresent());
+
+        List<Item> availableItems = items.getAvailableItemsDuring(fifteenthOfJanuary);
+
+        Offer offer = employees.makeOfferDuring(
+            "Black January",
+            fifteenthOfJanuary,
+            asList(unicornBike, unicornBike),
+            BigDecimal.valueOf(0.06)
+        );
+
+        Booking booking = null;
+        try {
+            booking = customers.bookWithOffering(matthiasDB.get(), availableItems, fifteenthOfJanuary, offer);
+            System.out.println("Reserved booking for: " + booking.getEstimatedPrice());
+        } catch (ItemsUnavailableException | TooManyBookingsForDurationException ex) { 
+            Assert.fail();
+            System.out.println("Meeh");
+        }
+
+        List<Item> availableItemsDuring = items.getAvailableItemsDuring(fifteenthOfJanuary);
+        Assert.assertTrue(availableItemsDuring.isEmpty());
+
+        Trip matthiasTrip = employees.sendCustomersOnTheirWay(bernddasbrot, booking, fifteenthOfJanuary.getStart());
+        Billing billing = employees.welcomeBack(matthiasTrip, fifteenthOfJanuary.getEnd());
+
+        Assert.assertEquals(billing.getPrice(), booking.getEstimatedPrice());
+
         tx.commit();
     }
 

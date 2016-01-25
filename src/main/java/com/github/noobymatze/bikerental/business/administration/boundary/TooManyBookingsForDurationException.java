@@ -7,7 +7,7 @@ import com.github.noobymatze.bikerental.business.time.entity.Duration;
  *
  * @author Matthias Metzger
  */
-class TooManyBookingsForDurationException extends Exception {
+public class TooManyBookingsForDurationException extends Exception {
 
     private final Customer customer;
     private final Duration duration;
